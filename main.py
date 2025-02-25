@@ -58,9 +58,9 @@ class TestUrbanRoutes:
         routes_page.get_taxi()
         routes_page.set_service()
 
-    def test_test_get_number_phone(self):
+    def test_get_number_phone(self):
         routes_page = UrbanRoutesPage(self.driver)
-        phone_number_value =data.phone_number
+        phone_number_value = data.phone_number
         routes_page.add_phone()
         routes_page.add_number_phone(phone_number_value)
         assert routes_page.get_number_phone() == phone_number_value
@@ -71,8 +71,10 @@ class TestUrbanRoutes:
 
     def test_send_code_phone(self):
         routes_page = UrbanRoutesPage(self.driver)
-        routes_page.set_code(retrieve_phone_code(self.driver))
+        get_code = retrieve_phone_code(self.driver)
+        routes_page.set_code(get_code)
         routes_page.send_code_phone()
+        assert get_code is not None  #se realiza validacion de dato
 
     def test_get_payment(self):
         route_page = UrbanRoutesPage(self.driver)
