@@ -40,13 +40,22 @@ class UrbanRoutesPage:
         self.wait.until(EC.visibility_of_element_located(locators.ask_for_a_taxi_button))
         self.driver.find_element(*locators.ask_for_a_taxi_button).click()
 
+    def is_taxi_requested(self):
+        return self.driver.find_element(*locators.ask_for_a_taxi_button).is_enabled() #nueva funcion para validar el click
+
         #especificar el servicio a pedir
     def set_service(self):
+        self.wait.until(EC.visibility_of_element_located(locators.ask_for_a_taxi_button))
         self.driver.find_element(*locators.comfort_button).click()
+
+    def get_service_status(self):
+        button = self.driver.find_element(*locators.comfort_button) #Nueva funcion para validar el servicio
+        return 'Comfort' in button.text
+        #return 'active' in button.get_attribute('class')
 
         #click en numero de telefono
     def add_phone(self):
-        self.driver.find_element(*locators.telephone_number_field).click()
+        self.driver.find_element(*locators.telephone_number_field).click() ############
 
         #agregar telefono
     def add_number_phone(self, phone):
@@ -60,6 +69,9 @@ class UrbanRoutesPage:
     def phone_number_submit(self):
         self.driver.find_element(*locators.next_button).click()
 
+    def is_phone_number_submitted(self):
+        return self.driver.find_element(*locators.next_button).is_enabled() #nueva funcion para dar click y enviar nuemro de telefono
+
         #solicitar codigo
     def set_code(self, code):
         self.driver.find_element(*locators.code_phone).send_keys(code)
@@ -72,9 +84,16 @@ class UrbanRoutesPage:
     def add_payment_method(self):
         self.driver.find_element(*locators.payment_method).click()
 
+    def is_selected_payment_method(self):
+        return self.driver.find_element(*locators.payment_method).is_enabled() #funcion para dar click al metodo de pago
+
         #insertar tarjeta
     def set_card(self):
+        self.wait.until(EC.visibility_of_element_located(locators.add_card_button))
         self.driver.find_element(*locators.add_card_button).click()
+
+    def is_add_card(self):
+        return self.driver.find_element(*locators.add_card_button).is_enabled() #funcion para dar click a agregar tarjeta
 
         #insertar numero de tarjeta
     def add_card_number(self, card):
@@ -96,13 +115,24 @@ class UrbanRoutesPage:
     def active_button_add(self):
         self.driver.find_element(*locators.card_code).send_keys(Keys.TAB)
 
+    #def activate_payment_card(self):
+        #return self.driver.find_element(*locators.card_code).is_enabled()  #Funcion para validar TAB
+
         #enviar informacion de tarjeta
     def add_card_information(self):
-        self.driver.find_element(*locators.add_button).click()
+        self.driver.find_element(*locators.add_button).click()  ###
+
+    #def is_add_card_information(self):
+        #return self.driver.find_element(*locators.add_button).is_enabled()  ####
 
         #cerrar ventana metodo de pago
     def close_payment_method(self):
+        self.wait.until(EC.visibility_of_element_located(locators.close_payment_method_modal))
         self.driver.find_element(*locators.close_payment_method_modal).click()
+
+    #def is_payment_method_closed(self):
+        #self.wait.until(EC.visibility_of_element_located(locators.close_payment_method_modal))
+        #return self.driver.find_element(*locators.close_payment_method_modal).is_enabled()
 
         #establecer mensaje al conductor
     def set_message_driver(self, message):

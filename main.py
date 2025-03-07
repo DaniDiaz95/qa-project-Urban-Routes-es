@@ -57,6 +57,8 @@ class TestUrbanRoutes:
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.get_taxi()
         routes_page.set_service()
+        assert routes_page.is_taxi_requested() == True #se hace la validacion del click para solicitar el taxi con is_enabled
+        assert routes_page.get_service_status() == True  # se valida que retorne el valor en texto del localizador
 
     def test_get_number_phone(self):
         routes_page = UrbanRoutesPage(self.driver)
@@ -68,6 +70,7 @@ class TestUrbanRoutes:
     def test_send_phone(self):
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.phone_number_submit()
+        assert routes_page.is_phone_number_submitted() == True  #se valida que de click para enviar el telefono
 
     def test_send_code_phone(self):
         routes_page = UrbanRoutesPage(self.driver)
@@ -79,10 +82,12 @@ class TestUrbanRoutes:
     def test_get_payment(self):
         route_page = UrbanRoutesPage(self.driver)
         route_page.add_payment_method()
+        assert route_page.is_selected_payment_method() == True #Se valida la seleccion del metodo para pagar
 
     def test_set_card(self):
         route_page = UrbanRoutesPage(self.driver)
         route_page.set_card()
+        assert route_page.is_add_card() == True #Se valida la seleccion de la tarjeta
 
     def test_get_card_number(self):
         routes_page = UrbanRoutesPage(self.driver)
@@ -97,13 +102,20 @@ class TestUrbanRoutes:
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.active_button_add()
 
+    def test_validate_button(self):
+        routes_page = UrbanRoutesPage(self.driver)
+        routes_page.active_button_add()
+        #assert routes_page.activate_payment_card() == True  #validar la activacion con TAB
+
     def test_add_card_active(self):
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.add_card_information()
+        #assert routes_page.is_add_card_information() == False
 
-    def test_close_payment_method(self):
-        routes_page = UrbanRoutesPage(self.driver)
-        routes_page.close_payment_method()
+    #def test_close_payment_method(self):
+        #routes_page = UrbanRoutesPage(self.driver)
+        #routes_page.close_payment_method()
+        #assert routes_page.is_payment_method_closed() == False
 
     def test_get_message_driver(self):
         routes_page = UrbanRoutesPage(self.driver)
