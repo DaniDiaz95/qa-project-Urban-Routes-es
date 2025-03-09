@@ -101,21 +101,22 @@ class TestUrbanRoutes:
     def test_active_button_add(self):
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.active_button_add()
+        assert routes_page.activate_payment_card() == True  #validar la activacion con TAB
 
     def test_validate_button(self):
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.active_button_add()
-        #assert routes_page.activate_payment_card() == True  #validar la activacion con TAB
+        assert routes_page.activate_payment_card() == True  #validar la activacion con TAB
 
     def test_add_card_active(self):
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.add_card_information()
-        #assert routes_page.is_add_card_information() == False
+        assert routes_page.is_add_card_information() == False
 
-    #def test_close_payment_method(self):
-        #routes_page = UrbanRoutesPage(self.driver)
-        #routes_page.close_payment_method()
-        #assert routes_page.is_payment_method_closed() == False
+    def test_close_payment_method(self):
+        routes_page = UrbanRoutesPage(self.driver)
+        routes_page.close_payment_method()
+        assert routes_page.is_payment_method_closed() == False
 
     def test_get_message_driver(self):
         routes_page = UrbanRoutesPage(self.driver)
@@ -126,6 +127,7 @@ class TestUrbanRoutes:
     def test_activate_button_to_blanket(self):
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.request_blanket_to_driver()
+        assert routes_page.is_request_blanket_to_driver() == True
 
     def test_add_ice_cream(self):
         routes_page = UrbanRoutesPage(self.driver)
@@ -135,6 +137,7 @@ class TestUrbanRoutes:
     def test_take_taxi(self):
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.button_request_a_taxi()
+        assert routes_page.is_taxi_requested() == True
 
 
     @classmethod

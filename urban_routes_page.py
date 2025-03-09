@@ -1,5 +1,6 @@
 import locators
 from selenium.webdriver import Keys
+from selenium.common import NoSuchElementException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
@@ -35,13 +36,13 @@ class UrbanRoutesPage:
         self.set_from(from_address)
         self.set_to(to_address)
 
+    def is_taxi_requested(self):
+        return self.driver.find_element(*locators.ask_for_a_taxi_button).is_enabled() #nueva funcion para validar el click
+
         #pedir un taxi
     def get_taxi(self):
         self.wait.until(EC.visibility_of_element_located(locators.ask_for_a_taxi_button))
         self.driver.find_element(*locators.ask_for_a_taxi_button).click()
-
-    def is_taxi_requested(self):
-        return self.driver.find_element(*locators.ask_for_a_taxi_button).is_enabled() #nueva funcion para validar el click
 
         #especificar el servicio a pedir
     def set_service(self):
@@ -111,28 +112,38 @@ class UrbanRoutesPage:
     def get_card_code(self):
         return self.driver.find_element(*locators.card_code).get_property('value')
 
+    def activate_payment_card(self):
+        return self.driver.find_element(*locators.card_code).is_enabled()  #Funcion para validar TAB
+
         #activar boton agregar
     def active_button_add(self):
         self.driver.find_element(*locators.card_code).send_keys(Keys.TAB)
 
-    #def activate_payment_card(self):
-        #return self.driver.find_element(*locators.card_code).is_enabled()  #Funcion para validar TAB
+    def is_active_button_add(self):
+        return self.driver.find_element(*locators.card_code).is_enabled()
+
+        #agregar informacion de tarjeta
+    def is_add_card_information(self):
+        return self.driver.find_element(*locators.add_button).is_enabled()  ####
 
         #enviar informacion de tarjeta
     def add_card_information(self):
         self.driver.find_element(*locators.add_button).click()  ###
-
-    #def is_add_card_information(self):
-        #return self.driver.find_element(*locators.add_button).is_enabled()  ####
 
         #cerrar ventana metodo de pago
     def close_payment_method(self):
         self.wait.until(EC.visibility_of_element_located(locators.close_payment_method_modal))
         self.driver.find_element(*locators.close_payment_method_modal).click()
 
-    #def is_payment_method_closed(self):
-        #self.wait.until(EC.visibility_of_element_located(locators.close_payment_method_modal))
-        #return self.driver.find_element(*locators.close_payment_method_modal).is_enabled()
+    def is_payment_method_closed(self):
+        try:
+            if self.driver.find_element(*locators.close_payment_method_modal).is_enabled():
+                return True
+            else:
+                return False
+
+        except NoSuchElementException:
+            return False
 
         #establecer mensaje al conductor
     def set_message_driver(self, message):
@@ -146,6 +157,9 @@ class UrbanRoutesPage:
     def request_blanket_to_driver(self):
         self.driver.find_element(*locators.activate_button).click()
 
+    def is_request_blanket_to_driver(self):
+        return self.driver.find_element(*locators.activate_button).is_enabled()
+
         #solicitar Helados
     def increment_button_ice_cream(self):
         actions = ActionChains(self.driver)
@@ -158,6 +172,9 @@ class UrbanRoutesPage:
         #solicitar taxi
     def button_request_a_taxi(self):
         self.driver.find_element(*locators.request_a_taxi).click()
+
+    def is_request_a_taxi(self):
+        return self.driver.find_element(*locators.request_a_taxi).is_enabled() #funcion para dar click a solicitar taxi
 
 
 
